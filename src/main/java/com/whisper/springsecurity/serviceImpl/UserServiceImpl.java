@@ -1,4 +1,6 @@
 package com.whisper.springsecurity.serviceImpl;
 
-public class UserServiceImpl {
+import com.whisper.springsecurity.service.UserService;
+
+public class UserServiceImpl implements UserService {
 }

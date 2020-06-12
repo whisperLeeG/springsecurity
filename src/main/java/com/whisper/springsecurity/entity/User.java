@@ -1,5 +1,11 @@
 package com.whisper.springsecurity.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
+
 public class User {
     private Long id;
 
@@ -22,6 +28,10 @@ public class User {
     private Long createTime;
 
     private Long updateTime;
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
     public Long getId() {
         return id;
