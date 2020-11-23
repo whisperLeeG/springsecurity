@@ -1,0 +1,35 @@
+--centos中安装docker 
+
+##查看防火墙的状态
+firewall -cmd --state或者systemctl status firewalld
+
+##开启防火墙
+systemctl start firewalld.service
+
+##停止
+systemctl disable firewalld
+
+##重新加载防火墙
+firewall-cmd –reload
+
+##禁用
+systemctl stop firewalld
+
+##设置开机自启防火墙
+systemctl enable firewalld
+
+##打开一个端口（如22）
+firewall-cmd --zone=public --add-port=22/tcp --permanent
+
+##查看防火墙打开的所有端口
+firewall-cmd --zone=public --list-ports
+
+##关闭防火墙开启的端口（如22）
+firewall-cmd --zone=public --remove-port=22/tcp --permanent
+
+##docker中进入mysql容器
+docker exec -it mysql bash
+
+##mysql 修改root用户密码
+alter user'root'@'%' IDENTIFIED BY 'MyNewPass@123';    刷新权限flush privileges;
+
