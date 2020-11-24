@@ -1,7 +1,7 @@
 --centos中安装docker 
 
 ##查看防火墙的状态
-firewall -cmd --state或者systemctl status firewalld
+firewall-cmd --state或者systemctl status firewalld
 
 ##开启防火墙
 systemctl start firewalld.service
@@ -10,7 +10,7 @@ systemctl start firewalld.service
 systemctl disable firewalld
 
 ##重新加载防火墙
-firewall-cmd –reload
+firewall-cmd –-reload
 
 ##禁用
 systemctl stop firewalld
@@ -33,3 +33,19 @@ docker exec -it mysql bash
 ##mysql 修改root用户密码
 alter user'root'@'%' IDENTIFIED BY 'MyNewPass@123';    刷新权限flush privileges;
 
+##解压命令
+tar -xzvf xxx.tar.gz
+
+
+##docker中关闭一个容器
+docker  container  stop   CONTAINER_ID
+
+##docker中删除一个容器
+docker   container  rm  CONTAINER_ID
+
+##连接redis
+redis-cli -h 127.0.0.1 -p 6379 -a "密码"
+
+#docker中redis和mysql设置为自启动
+docker update redis --restart=always
+docker update mysql --restart=always
