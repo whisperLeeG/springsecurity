@@ -27,11 +27,14 @@ firewall-cmd --zone=public --list-ports
 ##关闭防火墙开启的端口（如22）
 firewall-cmd --zone=public --remove-port=22/tcp --permanent
 
+##重启docker服务
+systemctl restart docker
+
 ##docker中进入mysql容器
 docker exec -it mysql bash
 
 ##mysql 修改root用户密码
-alter user'root'@'%' IDENTIFIED BY 'MyNewPass@123';    刷新权限flush privileges;
+alter user'root'@'%' IDENTIFIED BY 'root';    刷新权限flush privileges;
 
 ##解压命令
 tar -xzvf xxx.tar.gz
@@ -49,3 +52,18 @@ redis-cli -h 127.0.0.1 -p 6379 -a "密码"		(解决xshell中redis输出的中文
 #docker中redis和mysql设置为自启动
 docker update redis --restart=always
 docker update mysql --restart=always
+
+
+#docker中运行nacos
+docker  run --name nacos -d -p 8848:8848 --privileged=true --restart=always -e MODE=standalone -v /usr/local/nacos/logs:/home/nacos/logs -v /usr/local/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties nacos/nacos-server
+
+
+#docker 中查询mysqlIP地址
+docker inspect mysql | grep IPAddress
+
+#文件复制到docker中的容器中去
+docker cp /usr/local/mysql-connector-java-5.1.46.jar nacos:/home/nacos/plugins/mysql
+
+
+##nacos 源码打包命令
+mvn -Prelease-nacos -DskipTests -Drat.skip=true clean install -U
