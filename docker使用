@@ -1,4 +1,4 @@
---centos中安装docker 
+--centos中安装docker
 
 ##查看防火墙的状态
 firewall-cmd --state或者systemctl status firewalld
@@ -67,3 +67,38 @@ docker cp /usr/local/mysql-connector-java-5.1.46.jar nacos:/home/nacos/plugins/m
 
 ##nacos 源码打包命令
 mvn -Prelease-nacos -DskipTests -Drat.skip=true clean install -U
+
+
+##修改docker中mysql的时区
+	1.进入容器 ：docker exec -it mysql bash
+	2.到目标目录 ：cd /etc/mysql
+	3.追加到文件末尾:echo "default-time-zone = '+08:00'">>my.cnf
+	4.退出mysql容器然后重启容器
+
+
+
+
+##解决docker中mysql中文显示为???乱码问题
+
+	1.进入mysql容器
+	2.查看外部连接层编码:SHOW VARIABLES LIKE 'collation_%';
+	3.查看数据库字符集：SHOW VARIABLES LIKE 'character_set_%';
+	4.解决外部访问乱码问题:SET NAMES 'utf8';（等于SET character_set_client = utf8;
+												  SET character_set_results = utf8;
+												  SET character_set_connection = utf8;）
+	5.重新进入容器内部 ,但不登陆数据库,也就是到这一步:docker exec -it mysql bash
+	6.我们cd到etc/mysql/mysql.conf.d下
+	7.执行apt-get update			apt-get install vim					vim mysqld.cnf
+
+	[mysqld]
+	pid-file        = /var/run/mysqld/mysqld.pid
+	socket          = /var/run/mysqld/mysqld.sock
+	datadir         = /var/lib/mysql
+	default-character-set = utf8
+
+	[mysql.server]
+	default-character-set = utf8
+	[mysqld_safe]
+	default-character-set = utf8
+	[client]
+	default-character-set = utf8
