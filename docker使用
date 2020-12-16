@@ -58,7 +58,7 @@ docker update mysql --restart=always
 docker  run --name nacos -d -p 8848:8848 --privileged=true --restart=always -e MODE=standalone -v /usr/local/nacos/logs:/home/nacos/logs -v /usr/local/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties nacos/nacos-server
 
 
-#docker 中查询mysqlIP地址
+#docker中查询mysqlIP地址
 docker inspect mysql | grep IPAddress
 
 #文件复制到docker中的容器中去
